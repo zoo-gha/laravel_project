@@ -15,6 +15,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,9 +33,7 @@ Route::get('/', function () {
 });
 
 //la page d'accueil d'admin après l'authentification
-Route::get('/dashboard', function () {
-    return view('admin.adminhome');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 //la page d'accueil de l'utilisateur après l'authentification
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -108,5 +108,6 @@ Route::resource('/messages', MessageController::class);
 Route::get('/message/{message}/show', [MessageController::class, 'voir'])->name('message.show');
 Route::get('/messages/{message}', [MessageController::class, 'destroy']);
 
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 require __DIR__.'/auth.php';

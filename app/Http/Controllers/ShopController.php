@@ -36,7 +36,9 @@ class ShopController extends Controller
     public function showItem(Product $product)
     {
         //dd($product);
-        return view('frontend.product.show', compact('product'));
+        $products = Product::where('category_id', $product->category_id)->whereNot('id', $product->id)->get();
+        //dd($products);
+        return view('frontend.product.show', compact('product', 'products'));
     }
 
     public function showCart()

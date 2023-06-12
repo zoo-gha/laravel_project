@@ -87,8 +87,8 @@
                         @enderror
                     </div>
                     <div class="col-lg-12 text-center">
-                        <textarea placeholder="Your message" name="content"></textarea>
-                        @error('content')
+                        <textarea placeholder="Your message" name="message"></textarea>
+                        @error('message')
                             <div class="invalid-feedback text-center">
                                 <strong>{{ $message }}</strong>
                             </div>

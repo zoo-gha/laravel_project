@@ -78,16 +78,15 @@
                     <li>
                         <a href="{{route('shop.index')}}">Shop</a>
                         <ul class="header__menu__dropdown">
-                            <li>
-                                <a href="./shop-details.html">Shop Details</a>
-                            </li>
-                            <li>
-                                <a href="./shoping-cart.html">Shoping Cart</a>
-                            </li>
-                            <li><a href="./checkout.html">Check Out</a></li>
-                            <li>
-                                <a href="./blog-details.html">Blog Details</a>
-                            </li>
+                            @php
+                                use App\Models\Category;
+                                $categories = Category::get();
+                            @endphp
+                            @forelse ($categories as $category)
+                                <li key="{{ $category->id }}"><a href="{{ route('shop.show', $category) }}"> {{ $category->name }} </a></li>
+                            @empty
+                                <li><a href="">No data To show!!</a></li>
+                            @endforelse
                         </ul>
                     </li>
                     <li><a href="{{route('contact.voir')}}">Contact</a></li>
@@ -181,15 +180,12 @@
                                 <li>
                                     <a href="{{route('shop.index')}}">shop</a>
                                     <ul class="header__menu__dropdown">
-                                        <li>
-                                            <a href="./shop-details.html">Shop Details</a>
-                                        </li>
-                                        <li>
-                                            <a href="./shoping-cart.html">Shoping Cart</a>
-                                        </li>
-                                        <li>
-                                            <a href="./checkout.html">Check Out</a>
-                                        </li>
+
+                                        @forelse ($categories as $category)
+                                            <li key="{{ $category->id }}"><a href="{{ route('shop.show', $category) }}"> {{ $category->name }} </a></li>
+                                        @empty
+                                            <li><a href="">No data To show!!</a></li>
+                                        @endforelse
                                     </ul>
                                 </li>
                                 <li><a href="{{route('contact.voir')}}">Contact</a></li>
@@ -215,6 +211,28 @@
             </div>
         </header>
         <!-- Header Section End -->
+
+        <!-- Hero Section Begin -->
+        <section class="hero">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="hero__search">
+                            <div class="hero__search__form">
+                                <form action="{{route('search')}}" method="GET">
+                                    @csrf
+                                    <input type="text" name="query" placeholder="What do yo u need?" />
+                                    <button type="submit" class="site-btn">
+                                        SEARCH
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Hero Section End -->
 
         @if ($message = Session::get('success'))
             <div class="alert alert-success alert-block">
@@ -244,6 +262,11 @@
                     <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                         <div class="footer__widget">
                             <h6>Useful Links</h6>
+                            <ul>
+                                @foreach ($categories as $category)
+                                    <li key="{{ $category->id }}"><a href="{{ route('shop.show', $category) }}"> {{ $category->name }} </a></li>
+                                @endforeach
+                            </ul>
                             <ul>
                                 <li><a href="#">About Us</a></li>
                                 <li><a href="#">Shopping</a></li>

@@ -34,7 +34,7 @@
                         <div class="row">
 
                             @forelse ($products as $product)
-                                <div class="col-lg-4 col-md-6 col-sm-6 shadow-lg rounded mb-2">
+                                <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="product__item">
                                         <div
                                         class="product__item__pic set-bg"
