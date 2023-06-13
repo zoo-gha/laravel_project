@@ -23,7 +23,7 @@
                     </div>
                 </div>
             @empty
-                <div>There isn't a related product</div>
+                <div>There isn't a result product</div>
             @endforelse
         </div>
     </div>

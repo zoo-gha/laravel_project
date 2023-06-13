@@ -10,7 +10,7 @@
                     <span>ALIMENTAIRE SHOP</span>
                     <h2>DES PROMOS <br />100% INRATABLES!</h2>
                     <p>Découvrez Nos Meilleurs Offres!</p>
-                    <a href="#" class="primary-btn">Profiter Aujourd'hui!</a>
+                    <a href="{{route('shop.index')}}" class="primary-btn">Profiter Aujourd'hui!</a>
                 </div>
             </div>
         </div>
@@ -136,28 +136,10 @@
     <section class="banner3">
         <h2>Vous avez des questions</h2>
         <p>Nous avons déjà la réponse que vous cherchez</p>
-        <button class="btn-primary1">Contactez Nous</button>
+        <a href="{{route('contact.voir')}}"><button class="btn-primary1">Contactez Nous</button></a>
     </section>
     <!-- banner3 section end -->
 
-    <!-- Banner Begin
-    <div class="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="banner__pic">
-                        <img src="{{ asset('frontend/img/banner/banner-1.jpg') }}" alt="" />
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="banner__pic">
-                        <img src="{{ asset('frontend/img/banner/banner-2.jpg') }}" alt="" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    Banner End -->
 @endsection
 
 

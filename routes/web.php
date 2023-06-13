@@ -33,7 +33,7 @@ Route::get('/', function () {
 });
 
 //la page d'accueil d'admin après l'authentification
-Route::get('/dashboard',[HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[HomeController::class, 'index'])->middleware(['auth', 'verified', 'isadmin'])->name('dashboard');
 
 //la page d'accueil de l'utilisateur après l'authentification
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -41,12 +41,33 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 //la page d'accueil d'admin après l'authentification
 Route::get('/adminhome', function() {
     return view('admin.adminhome');
-})->name('adminhome');
+})->middleware(['auth', 'verified', 'isadmin'])->name('adminhome');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('isadmin')->group(function () {
+    //les url vers les op CRUD du product
+    Route::resource('/products', ProductController::class);
+    Route::get('/products/{product}', [ProductController::class, 'destroy']);
+
+    //les url vers les op CRUD du Catégorie du produit
+    Route::resource('/categories', CategoryController::class);
+    Route::get('categories/{category}', [CategoryController::class, 'destroy']);
+
+    //les url vers les op CRUD du Catégorie du blog
+    Route::resource('/blogCategories', BlogCategoryController::class);
+    Route::get('blogCategories/{blogCategory}', [BlogCategoryController::class, 'destroy']);
+    //les url vers les op CRUD du blog
+    Route::resource('/blogs', BlogController::class);
+    Route::get('/blogs/{blog}', [BlogController::class, 'destroy']);
+
+    //les url vers les op CRUD des users (consolter la list, et aussi modifier pour avoir un utilisateur)
+    Route::resource('/users', UserController::class);
+    Route::get('/users/{user}', [UserController::class, 'destroy']);
 });
 
 
@@ -72,26 +93,10 @@ Route::get('/Ecriture/blogs/{blogcategory}', 'App\Http\Controllers\Client\BlogCo
 Route::get('/Ecriture/blogs/show/{blog}', 'App\Http\Controllers\Client\BlogController@showItem')->name('blog.showitem');
 
 
-//les url vers les op CRUD du product
-Route::resource('/products', ProductController::class);
-Route::get('/products/{product}', [ProductController::class, 'destroy']);
-
-//les url vers les op CRUD du Catégorie du produit
-Route::resource('/categories', CategoryController::class);
-Route::get('categories/{category}', [CategoryController::class, 'destroy']);
-
-//les url vers les op CRUD du Catégorie du blog
-Route::resource('/blogCategories', BlogCategoryController::class);
-Route::get('blogCategories/{blogCategory}', [BlogCategoryController::class, 'destroy']);
 
 
-//les url vers les op CRUD du blog
-Route::resource('/blogs', BlogController::class);
-Route::get('/blogs/{blog}', [BlogController::class, 'destroy']);
 
-//les url vers les op CRUD des users (consolter la list, et aussi modifier pour avoir un utilisateur)
-Route::resource('/users', UserController::class);
-Route::get('/users/{user}', [UserController::class, 'destroy']);
+
 
 
 
